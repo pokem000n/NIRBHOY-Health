@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Official Brand Identity: Deep Lavender (#7c3aed) + Obsidian Midnight (#0b0f19) + Heartbeat Red (#ff1753) */
+  --theme-primary: #7c3aed;
+  --theme-primary-hover: #6d28d9;
+  --theme-primary-light: #f5f3ff;
+  --theme-primary-border: #ddd6fe;
+  --theme-primary-text: #5b21b6;
+  --theme-primary-accent: #a78bfa;
+  --theme-navy: #0b0f19;
+  --theme-navy-surface: #111827;
+  --theme-navy-border: #1e293b;
+  --theme-navy-light: #f1f5f9;
+  --theme-accent: #ff1753;
+  --theme-accent-hover: #e11d48;
+  --theme-accent-light: #fff1f2;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    color: #0f172a;
+    background-color: #fafbfc;
+  }
+
+  body {
+    font-family: 'Hind Siliguri', 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #f8fafc;
+    color: #0f172a;
+    letter-spacing: normal;
+  }
+
+  /* Prevent Bengali conjunct glyph overlapping caused by negative tracking */
+  h1, h2, h3, h4, h5, h6, p, span, button, a {
+    letter-spacing: normal !important;
+  }
+
+  ::selection {
+    background-color: var(--theme-primary-light);
+    color: var(--theme-primary-text);
+  }
+}
+
+/* Dynamic Brand Color Architecture */
+/* Major 1: Midnight Base */
+.bg-navy-950 { background-color: var(--theme-navy) !important; }
+.bg-navy-900 { background-color: var(--theme-navy-surface) !important; }
+.bg-navy-800 { background-color: var(--theme-navy-border) !important; }
+.bg-navy-700 { background-color: #1e293b !important; }
+.bg-navy-50 { background-color: var(--theme-navy-light) !important; }
+.text-navy-950 { color: var(--theme-navy) !important; }
+.text-navy-900 { color: var(--theme-navy-surface) !important; }
+.border-navy-900 { border-color: var(--theme-navy-surface) !important; }
+.border-navy-800 { border-color: var(--theme-navy-border) !important; }
+.border-navy-100 { border-color: #e2e8f0 !important; }
+
+/* Major 2: Dynamic Primary (Hooks all historical classes) */
+.bg-cobalt-600, .bg-teal-600, .bg-blue-600 { background-color: var(--theme-primary) !important; }
+.hover\:bg-cobalt-700:hover, .hover\:bg-teal-700:hover, .hover\:bg-blue-700:hover { background-color: var(--theme-primary-hover) !important; }
+.text-cobalt-600, .text-teal-600, .text-blue-600 { color: var(--theme-primary) !important; }
+.text-cobalt-700, .text-teal-700, .text-blue-700 { color: var(--theme-primary-text) !important; }
+.text-cobalt-500, .text-teal-500, .text-blue-500 { color: var(--theme-primary) !important; }
+.text-cobalt-400, .text-teal-400, .text-blue-400 { color: var(--theme-primary-accent) !important; }
+.text-cobalt-300, .text-teal-300, .text-blue-300 { color: var(--theme-primary-accent) !important; }
+.bg-cobalt-50, .bg-teal-50, .bg-blue-50 { background-color: var(--theme-primary-light) !important; }
+.border-cobalt-200, .border-teal-200, .border-blue-200 { border-color: var(--theme-primary-border) !important; }
+.bg-teal-100 { background-color: var(--theme-primary-light) !important; }
+
+/* Wired Accent */
+.bg-pulse-electric { background-color: var(--theme-accent) !important; }
+.text-pulse-electric { color: var(--theme-accent) !important; }
+.border-pulse-electric { border-color: var(--theme-accent) !important; }
+.bg-pulse-50 { background-color: var(--theme-accent-light) !important; }
+.text-pulse-600 { color: var(--theme-accent-hover) !important; }
+.hover\:bg-pulse-600:hover { background-color: var(--theme-accent-hover) !important; }
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Subtle wired pulse animations */
+@keyframes wired-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.88;
+    transform: scale(1.04);
+  }
+}
+
+.animate-wired-pulse {
+  animation: wired-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}

@@ -1,0 +1,21 @@
+{
+  "name": "nirbhoy-health",
+  "version": "1.0.0",
+  "description": "NIRBHOY Health - Full-Stack Digital Healthcare Ecosystem for Bangladesh",
+  "scripts": {
+    "server": "node server/index.js",
+    "client": "npm run dev --prefix client",
+    "build": "npm run build --prefix client",
+    "start": "node server/index.js"
+  },
+  "keywords": [
+    "healthcare",
+    "telemedicine",
+    "bangladesh",
+    "ambulance",
+    "pharmacy",
+    "bKash"
+  ],
+  "author": "NIRBHOY Health Team",
+  "license": "MIT"
+}

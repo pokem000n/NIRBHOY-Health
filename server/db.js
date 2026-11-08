@@ -1,0 +1,863 @@
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const DB_FILE = path.join(__dirname, 'data.json');
+
+const initialData = {
+  users: [
+    {
+      id: "usr_001",
+      email: "demo@nirbhoyhealth.com",
+      password: "password123",
+      name: "Tanvir Ahmed",
+      phone: "+8801712345678",
+      role: "patient",
+      address: "House 42, Road 11, Dhanmondi, Dhaka",
+      subscription: {
+        status: "active",
+        plan: "monthly",
+        validUntil: "2026-12-31"
+      }
+    },
+    {
+      id: "usr_admin",
+      email: "admin@nirbhoyhealth.com",
+      password: "admin123",
+      name: "NIRBHOY Operations Command",
+      phone: "+8801999999999",
+      role: "admin",
+      address: "Gulshan-1, Dhaka"
+    }
+  ],
+  doctors: [
+    {
+      id: "doc_001",
+      name: "Dr. Farhana Yasmin",
+      bmdcNumber: "A-54321",
+      specialty: "General Physician",
+      qualification: "MBBS (DMC), FCPS (Medicine)",
+      hospitalId: "hosp_001",
+      primaryHospital: "Dhaka Medical College & Hospital (DMCH)",
+      experience: "12 years",
+      rating: 4.9,
+      reviews: 142,
+      onlineFee: 600,
+      availableOnline: true,
+      image: "https://images.unsplash.com/photo-1594824813511-37d402b1f868?auto=format&fit=crop&q=80&w=600",
+      bio: "Associate Professor in Internal Medicine with profound expertise in infectious diseases, chronic hypertension, and geriatric care.",
+      slots: ["10:00 AM", "11:30 AM", "03:00 PM", "05:30 PM", "08:00 PM"],
+      chambers: [
+        {
+          id: "chamb_101",
+          hospitalId: "hosp_003",
+          hospitalName: "Square Hospital Dhaka",
+          area: "Panthapath, Dhaka",
+          roomNumber: "Room 402, 4th Floor",
+          visitingDays: "Sat, Mon, Wed",
+          visitingHours: "05:30 PM - 09:00 PM",
+          chamberFee: 1200,
+          maxDailySerials: 25,
+          currentBookedSerials: 11,
+          nextAvailableDate: "2026-11-09"
+        },
+        {
+          id: "chamb_102",
+          hospitalId: "hosp_004",
+          hospitalName: "Popular Diagnostic Center (Dhanmondi Branch)",
+          area: "House 16, Road 2, Dhanmondi",
+          roomNumber: "Room 214, Building 2",
+          visitingDays: "Sun, Tue, Thu",
+          visitingHours: "06:00 PM - 09:30 PM",
+          chamberFee: 1000,
+          maxDailySerials: 30,
+          currentBookedSerials: 19,
+          nextAvailableDate: "2026-11-10"
+        }
+      ]
+    },
+    {
+      id: "doc_002",
+      name: "Prof. Dr. Mahbubur Rahman",
+      bmdcNumber: "A-32109",
+      specialty: "Cardiologist",
+      qualification: "MBBS, MD (Cardiology), FACC (USA)",
+      hospitalId: "hosp_005",
+      primaryHospital: "National Institute of Cardiovascular Diseases (NICVD)",
+      experience: "18 years",
+      rating: 5.0,
+      reviews: 215,
+      onlineFee: 1000,
+      availableOnline: true,
+      image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=600",
+      bio: "Pioneer interventional cardiologist with over 8,000 successful angiograms and stent placements.",
+      slots: ["11:00 AM", "04:00 PM", "06:30 PM", "09:00 PM"],
+      chambers: [
+        {
+          id: "chamb_201",
+          hospitalId: "hosp_005",
+          hospitalName: "National Heart Foundation Hospital",
+          area: "Plot 4, Section 2, Mirpur",
+          roomNumber: "Consultation Suite 5, 2nd Floor",
+          visitingDays: "Sat, Sun, Tue, Thu",
+          visitingHours: "04:00 PM - 08:30 PM",
+          chamberFee: 1500,
+          maxDailySerials: 20,
+          currentBookedSerials: 14,
+          nextAvailableDate: "2026-11-09"
+        },
+        {
+          id: "chamb_202",
+          hospitalId: "hosp_002",
+          hospitalName: "Evercare Hospital Dhaka",
+          area: "Bashundhara R/A, Dhaka",
+          roomNumber: "OPD 312, Cardiology Wing",
+          visitingDays: "Mon, Wed",
+          visitingHours: "03:00 PM - 07:00 PM",
+          chamberFee: 1800,
+          maxDailySerials: 15,
+          currentBookedSerials: 8,
+          nextAvailableDate: "2026-11-11"
+        }
+      ]
+    },
+    {
+      id: "doc_003",
+      name: "Dr. Nusrat Jahan",
+      bmdcNumber: "A-67890",
+      specialty: "Pediatrician",
+      qualification: "MBBS (SSMC), DCH, FCPS (Pediatrics)",
+      hospitalId: "hosp_001",
+      primaryHospital: "Bangladesh Shishu Hospital & Institute",
+      experience: "9 years",
+      rating: 4.8,
+      reviews: 98,
+      onlineFee: 700,
+      availableOnline: true,
+      image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=600",
+      bio: "Dedicated pediatrician focusing on neonatology, childhood asthma, child vaccination counseling, and growth monitoring.",
+      slots: ["09:30 AM", "01:00 PM", "04:30 PM", "07:00 PM"],
+      chambers: [
+        {
+          id: "chamb_301",
+          hospitalId: "hosp_003",
+          hospitalName: "Square Hospital Dhaka",
+          area: "Panthapath, Dhaka",
+          roomNumber: "Pediatric OPD Room 102",
+          visitingDays: "Everyday (Except Friday)",
+          visitingHours: "05:00 PM - 08:30 PM",
+          chamberFee: 1100,
+          maxDailySerials: 30,
+          currentBookedSerials: 18,
+          nextAvailableDate: "2026-11-09"
+        }
+      ]
+    },
+    {
+      id: "doc_004",
+      name: "Dr. Kazi Tariqul Islam",
+      bmdcNumber: "A-45612",
+      specialty: "Neurologist",
+      qualification: "MBBS, MD (Neurology), Stroke Specialist",
+      hospitalId: "hosp_004",
+      primaryHospital: "BSMMU (PG Hospital), Shahbag",
+      experience: "15 years",
+      rating: 4.9,
+      reviews: 176,
+      onlineFee: 1200,
+      availableOnline: true,
+      image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=600",
+      bio: "Senior Consultant neurologist specializing in stroke rehabilitation, epilepsy, chronic migraine, and neuropathy.",
+      slots: ["12:00 PM", "03:30 PM", "06:00 PM"],
+      chambers: [
+        {
+          id: "chamb_401",
+          hospitalId: "hosp_004",
+          hospitalName: "Labaid Specialized Hospital",
+          area: "House 6, Road 4, Dhanmondi",
+          roomNumber: "Neuro Suite 405",
+          visitingDays: "Sat, Mon, Wed, Thu",
+          visitingHours: "06:00 PM - 10:00 PM",
+          chamberFee: 1400,
+          maxDailySerials: 22,
+          currentBookedSerials: 16,
+          nextAvailableDate: "2026-11-09"
+        }
+      ]
+    },
+    {
+      id: "doc_005",
+      name: "Dr. Shamima Nasreen",
+      bmdcNumber: "A-78912",
+      specialty: "Gynecologist & Obstetrician",
+      qualification: "MBBS, MS (Gynae & Obs), MRCOG (London)",
+      hospitalId: "hosp_003",
+      primaryHospital: "Square Hospital Dhaka",
+      experience: "14 years",
+      rating: 4.9,
+      reviews: 189,
+      onlineFee: 900,
+      availableOnline: true,
+      image: "https://images.unsplash.com/photo-1551601651-2a8555f1a136?auto=format&fit=crop&q=80&w=600",
+      bio: "High-risk pregnancy expert, fetal medicine consultant, and laparoscopic reproductive health surgeon.",
+      slots: ["10:30 AM", "02:30 PM", "05:00 PM", "07:30 PM"],
+      chambers: [
+        {
+          id: "chamb_501",
+          hospitalId: "hosp_003",
+          hospitalName: "Square Hospital Dhaka",
+          area: "Panthapath, Dhaka",
+          roomNumber: "Gynae Suite 518",
+          visitingDays: "Sat, Sun, Tue, Wed",
+          visitingHours: "04:30 PM - 08:30 PM",
+          chamberFee: 1500,
+          maxDailySerials: 25,
+          currentBookedSerials: 20,
+          nextAvailableDate: "2026-11-09"
+        }
+      ]
+    },
+    {
+      id: "doc_006",
+      name: "Dr. Anisur Rahman",
+      bmdcNumber: "A-34521",
+      specialty: "Orthopedic Surgeon",
+      qualification: "MBBS, MS (Ortho), Fellowship in Arthroscopy",
+      hospitalId: "hosp_001",
+      primaryHospital: "NITOR (Pongu Hospital), Dhaka",
+      experience: "11 years",
+      rating: 4.7,
+      reviews: 112,
+      onlineFee: 800,
+      availableOnline: false,
+      image: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=600",
+      bio: "Bone and joint trauma surgeon, joint replacement and sports injury specialist.",
+      slots: ["04:00 PM", "06:30 PM", "08:30 PM"],
+      chambers: [
+        {
+          id: "chamb_601",
+          hospitalId: "hosp_004",
+          hospitalName: "Central Hospital Limited",
+          area: "Green Road, Dhanmondi",
+          roomNumber: "Room 108, Ground Floor",
+          visitingDays: "Everyday (Except Friday)",
+          visitingHours: "05:00 PM - 09:00 PM",
+          chamberFee: 1000,
+          maxDailySerials: 25,
+          currentBookedSerials: 14,
+          nextAvailableDate: "2026-11-09"
+        }
+      ]
+    }
+  ],
+  ambulances: [
+    {
+      id: "amb_001",
+      ownershipType: "hospital",
+      hospitalId: "hosp_003",
+      hospitalName: "Square Hospital Emergency Fleet",
+      type: "ICU Ambulance (Life Support)",
+      baseFee: 4500,
+      perKmFee: 65,
+      features: ["Ventilator", "Oxygen Cylinder", "Cardiac Defibrillator", "Paramedic & Nurse Onboard", "Infusion Pumps"],
+      vehicleNumber: "Dhaka Metro-Chha-11-8921",
+      driverName: "Md. Rafiqul Islam",
+      driverPhone: "+8801711223344",
+      status: "available",
+      currentLocation: "Panthapath Base, Dhaka",
+      area: "Central Dhaka / Dhanmondi",
+      latitude: 23.7512,
+      longitude: 90.3868
+    },
+    {
+      id: "amb_002",
+      ownershipType: "hospital",
+      hospitalId: "hosp_002",
+      hospitalName: "Evercare Hospital Rapid Care Fleet",
+      type: "ICU Ambulance (Life Support)",
+      baseFee: 4800,
+      perKmFee: 70,
+      features: ["Mobile ICU Ventilator", "BiPAP", "Emergency Syringe Driver", "Trauma Stretcher"],
+      vehicleNumber: "Dhaka Metro-Chha-15-4019",
+      driverName: "Tariqul Anam",
+      driverPhone: "+8801819334455",
+      status: "available",
+      currentLocation: "Bashundhara R/A, Dhaka",
+      area: "North Dhaka / Gulshan / Uttara",
+      latitude: 23.8152,
+      longitude: 90.4286
+    },
+    {
+      id: "amb_003",
+      ownershipType: "hospital",
+      hospitalId: "hosp_001",
+      hospitalName: "Dhaka Medical College Govt Ambulance",
+      type: "AC Emergency Ambulance",
+      baseFee: 1500,
+      perKmFee: 35,
+      features: ["High Capacity Oxygen", "Foldable Stretcher", "First Aid Trauma Box"],
+      vehicleNumber: "Govt Fleet-Ga-08-3012",
+      driverName: "Sultan Mahmud",
+      driverPhone: "+8801812334455",
+      status: "available",
+      currentLocation: "Bakshibazar Station, Dhaka",
+      area: "Old Dhaka / Ramna",
+      latitude: 23.7258,
+      longitude: 90.3976
+    },
+    {
+      id: "amb_004",
+      ownershipType: "individual",
+      hospitalId: null,
+      hospitalName: "Al-Amin Private Ambulance Service",
+      type: "Non-AC Standard Ambulance",
+      baseFee: 1200,
+      perKmFee: 35,
+      features: ["Basic Stretcher", "Oxygen Cylinder", "Fast City Transit"],
+      vehicleNumber: "Dhaka Metro-Chha-12-7845",
+      driverName: "Al-Amin Hossain",
+      driverPhone: "+8801913445566",
+      status: "available",
+      currentLocation: "Mirpur 10 Circle, Dhaka",
+      area: "Mirpur / Pallabi / Agargaon",
+      latitude: 23.8071,
+      longitude: 90.3686
+    },
+    {
+      id: "amb_005",
+      ownershipType: "individual",
+      hospitalId: null,
+      hospitalName: "Bismillah Freezing Ambulance Service",
+      type: "Freezing Ambulance",
+      baseFee: 3000,
+      perKmFee: 55,
+      features: ["-5°C Low Temperature Morgue Unit", "24/7 Generator Backup", "All Bangladesh Districts Transit"],
+      vehicleNumber: "Dhaka Metro-Chha-09-5412",
+      driverName: "Kamrul Hasan",
+      driverPhone: "+8801614556677",
+      status: "available",
+      currentLocation: "Uttara Sector 7 Station",
+      area: "Uttara / Gazipur / Airport",
+      latitude: 23.8728,
+      longitude: 90.3984
+    }
+  ],
+  pharmacies: [
+    {
+      id: "pharma_001",
+      name: "Lazz Pharma (Central Kalabagan Branch)",
+      type: "Renowned Model Pharmacy Chain",
+      hospitalId: null,
+      dgdaLicense: "DGDA/MODEL/DH-0042",
+      area: "Kalabagan, Mirpur Road, Dhaka",
+      address: "64/3 Mirpur Road, Kalabagan",
+      phone: "+88029112233",
+      rating: 4.9,
+      reviews: 1420,
+      deliveryTimeMinutes: 40,
+      isPartnerVerified: true,
+      logo: "https://images.unsplash.com/photo-1576602976047-174e57a47881?auto=format&fit=crop&q=80&w=300",
+      description: "Bangladesh's most trusted 24-hour retail model pharmacy stocking 100% genuine temperature-controlled medicines."
+    },
+    {
+      id: "pharma_002",
+      name: "Square Hospital In-House Pharmacy",
+      type: "Hospital In-House Pharmacy",
+      hospitalId: "hosp_003",
+      dgdaLicense: "DGDA/HOSP/SQ-019",
+      area: "Panthapath, Dhaka",
+      address: "18/F West Panthapath, Ground Floor",
+      phone: "+8809610010616",
+      rating: 4.9,
+      reviews: 890,
+      deliveryTimeMinutes: 35,
+      isPartnerVerified: true,
+      logo: "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&q=80&w=300",
+      description: "Authentic hospital pharmacy with specialized oncology, cardiology, ICU drugs, and imported life-saving injections."
+    },
+    {
+      id: "pharma_003",
+      name: "Tamanna Pharmacy (Banani Outlet)",
+      type: "Renowned Retail Chain",
+      hospitalId: null,
+      dgdaLicense: "DGDA/RETAIL/BN-108",
+      area: "Banani, Block E, Dhaka",
+      address: "House 34, Road 11, Banani",
+      phone: "+8801711889911",
+      rating: 4.8,
+      reviews: 640,
+      deliveryTimeMinutes: 45,
+      isPartnerVerified: true,
+      logo: "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&q=80&w=300",
+      description: "Premier pharmaceutical retailer serving Gulshan, Banani, and Baridhara with cold-chain insulin and baby essentials."
+    },
+    {
+      id: "pharma_004",
+      name: "Evercare Hospital Pharmacy",
+      type: "Hospital In-House Pharmacy",
+      hospitalId: "hosp_002",
+      dgdaLicense: "DGDA/HOSP/EC-088",
+      area: "Bashundhara R/A, Dhaka",
+      address: "Plot 81, Block E, Bashundhara",
+      phone: "+8809666710678",
+      rating: 4.9,
+      reviews: 730,
+      deliveryTimeMinutes: 45,
+      isPartnerVerified: true,
+      logo: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=300",
+      description: "International standard hospital dispensing unit with barcode-verified batches and climate-controlled storage."
+    }
+  ],
+  medicines: [
+    {
+      id: "med_001",
+      name: "Napa Extra 500mg+65mg",
+      generic: "Paracetamol + Caffeine",
+      manufacturer: "Beximco Pharmaceuticals Ltd.",
+      dosageForm: "Tablet",
+      pricePerStrip: 35,
+      unit: "Strip of 12 tablets",
+      prescriptionRequired: false,
+      category: "Pain & Fever",
+      inStock: true,
+      pharmacyId: "pharma_001",
+      pharmacyName: "Lazz Pharma (Central Kalabagan)",
+      image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=400"
+    },
+    {
+      id: "med_002",
+      name: "Sergel 20mg",
+      generic: "Esomeprazole Magnesium",
+      manufacturer: "Healthcare Pharmaceuticals Ltd.",
+      dosageForm: "Capsule",
+      pricePerStrip: 70,
+      unit: "Strip of 10 capsules",
+      prescriptionRequired: false,
+      category: "Gastric & Acidity",
+      inStock: true,
+      pharmacyId: "pharma_001",
+      pharmacyName: "Lazz Pharma (Central Kalabagan)",
+      image: "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&q=80&w=400"
+    },
+    {
+      id: "med_003",
+      name: "Seclo 20mg",
+      generic: "Omeprazole",
+      manufacturer: "Square Pharmaceuticals PLC",
+      dosageForm: "Capsule",
+      pricePerStrip: 60,
+      unit: "Strip of 10 capsules",
+      prescriptionRequired: false,
+      category: "Gastric & Acidity",
+      inStock: true,
+      pharmacyId: "pharma_002",
+      pharmacyName: "Square Hospital In-House Pharmacy",
+      image: "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&q=80&w=400"
+    },
+    {
+      id: "med_004",
+      name: "Monas 10mg",
+      generic: "Montelukast Sodium",
+      manufacturer: "Acme Laboratories Ltd.",
+      dosageForm: "Tablet",
+      pricePerStrip: 160,
+      unit: "Strip of 10 tablets",
+      prescriptionRequired: true,
+      category: "Respiratory & Allergy",
+      inStock: true,
+      pharmacyId: "pharma_003",
+      pharmacyName: "Tamanna Pharmacy (Banani)",
+      image: "https://images.unsplash.com/photo-1550572017-edd951aa8f72?auto=format&fit=crop&q=80&w=400"
+    },
+    {
+      id: "med_005",
+      name: "Ceevit 250mg Chewable",
+      generic: "Ascorbic Acid (Vitamin C)",
+      manufacturer: "Square Pharmaceuticals PLC",
+      dosageForm: "Chewable Tablet",
+      pricePerStrip: 24,
+      unit: "Strip of 10 tablets",
+      prescriptionRequired: false,
+      category: "Vitamins & Supplements",
+      inStock: true,
+      pharmacyId: "pharma_002",
+      pharmacyName: "Square Hospital In-House Pharmacy",
+      image: "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?auto=format&fit=crop&q=80&w=400"
+    },
+    {
+      id: "med_006",
+      name: "Fexo 120mg",
+      generic: "Fexofenadine HCl",
+      manufacturer: "Square Pharmaceuticals PLC",
+      dosageForm: "Tablet",
+      pricePerStrip: 90,
+      unit: "Strip of 10 tablets",
+      prescriptionRequired: false,
+      category: "Respiratory & Allergy",
+      inStock: true,
+      pharmacyId: "pharma_001",
+      pharmacyName: "Lazz Pharma (Central Kalabagan)",
+      image: "https://images.unsplash.com/photo-1577401239170-897942555fb3?auto=format&fit=crop&q=80&w=400"
+    },
+    {
+      id: "med_007",
+      name: "ORSaline-N Oral Saline",
+      generic: "Oral Rehydration Salts",
+      manufacturer: "SMC Enterprise Ltd.",
+      dosageForm: "Sachet Powder",
+      pricePerStrip: 6,
+      unit: "1 Packet (500ml water)",
+      prescriptionRequired: false,
+      category: "Dehydration & Diarrhea",
+      inStock: true,
+      pharmacyId: "pharma_001",
+      pharmacyName: "Lazz Pharma (Central Kalabagan)",
+      image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=400"
+    },
+    {
+      id: "med_008",
+      name: "Azyth 500mg",
+      generic: "Azithromycin Dihydrate",
+      manufacturer: "Incepta Pharmaceuticals Ltd.",
+      dosageForm: "Tablet",
+      pricePerStrip: 175,
+      unit: "Strip of 5 tablets",
+      prescriptionRequired: true,
+      category: "Antibiotics",
+      inStock: true,
+      pharmacyId: "pharma_004",
+      pharmacyName: "Evercare Hospital Pharmacy",
+      image: "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&q=80&w=400"
+    }
+  ],
+  hospitals: [
+    {
+      id: "hosp_001",
+      name: "Dhaka Medical College & Hospital (DMCH)",
+      type: "Public Tertiary Medical College Hospital",
+      area: "Secretariat Road, Bakshibazar",
+      city: "Dhaka",
+      distanceKm: 2.1,
+      phone: "+880255165088",
+      emergencyHotline: "01730000001",
+      rating: 4.6,
+      reviews: 2100,
+      image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=600",
+      beds: {
+        icu: { total: 30, available: 8, feePerDay: 2500 },
+        ccu: { total: 20, available: 5, feePerDay: 2200 },
+        nicu: { total: 25, available: 3, feePerDay: 2000 },
+        cabin: { total: 60, available: 12, feePerDay: 1800 },
+        generalWard: { total: 800, available: 75, feePerDay: 350 }
+      },
+      bloodInventory: {
+        "A+": 18, "A-": 4, "B+": 24, "B-": 5, "O+": 32, "O-": 6, "AB+": 9, "AB-": 2
+      },
+      hasInHousePharmacy: true,
+      inHousePharmacyName: "DMCH Central Dispensary",
+      ambulanceFleetCount: 8,
+      verifiedPartner: true
+    },
+    {
+      id: "hosp_002",
+      name: "Evercare Hospital Dhaka",
+      type: "JCI Accredited Multi-Disciplinary Super Specialty",
+      area: "Plot 81, Block E, Bashundhara R/A",
+      city: "Dhaka",
+      distanceKm: 4.8,
+      phone: "+8809666710678",
+      emergencyHotline: "10678",
+      rating: 4.9,
+      reviews: 1840,
+      image: "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&q=80&w=600",
+      beds: {
+        icu: { total: 40, available: 14, feePerDay: 12000 },
+        ccu: { total: 25, available: 8, feePerDay: 10500 },
+        nicu: { total: 20, available: 4, feePerDay: 9500 },
+        cabin: { total: 120, available: 34, feePerDay: 7500 },
+        generalWard: { total: 250, available: 62, feePerDay: 3500 }
+      },
+      bloodInventory: {
+        "A+": 25, "A-": 6, "B+": 30, "B-": 8, "O+": 40, "O-": 9, "AB+": 14, "AB-": 4
+      },
+      hasInHousePharmacy: true,
+      inHousePharmacyName: "Evercare Hospital Pharmacy",
+      ambulanceFleetCount: 6,
+      verifiedPartner: true
+    },
+    {
+      id: "hosp_003",
+      name: "Square Hospital Dhaka",
+      type: "Private Tertiary Care & Centers of Excellence",
+      area: "18/F, Bir Uttam Qazi Nuruzzaman Sarak, West Panthapath",
+      city: "Dhaka",
+      distanceKm: 1.4,
+      phone: "+8809610010616",
+      emergencyHotline: "10616",
+      rating: 4.8,
+      reviews: 1650,
+      image: "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=600",
+      beds: {
+        icu: { total: 35, available: 11, feePerDay: 11000 },
+        ccu: { total: 20, available: 6, feePerDay: 9500 },
+        nicu: { total: 15, available: 3, feePerDay: 8500 },
+        cabin: { total: 100, available: 26, feePerDay: 6800 },
+        generalWard: { total: 200, available: 48, feePerDay: 3200 }
+      },
+      bloodInventory: {
+        "A+": 21, "A-": 5, "B+": 28, "B-": 7, "O+": 36, "O-": 8, "AB+": 12, "AB-": 3
+      },
+      hasInHousePharmacy: true,
+      inHousePharmacyName: "Square Hospital In-House Pharmacy",
+      ambulanceFleetCount: 5,
+      verifiedPartner: true
+    },
+    {
+      id: "hosp_004",
+      name: "Bangabandhu Sheikh Mujib Medical University (BSMMU)",
+      type: "Autonomous Postgraduate Medical University",
+      area: "Shahbag, Dhaka",
+      city: "Dhaka",
+      distanceKm: 2.8,
+      phone: "+88029661051",
+      emergencyHotline: "01711002233",
+      rating: 4.7,
+      reviews: 1980,
+      image: "https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?auto=format&fit=crop&q=80&w=600",
+      beds: {
+        icu: { total: 32, available: 6, feePerDay: 3000 },
+        ccu: { total: 18, available: 4, feePerDay: 2600 },
+        nicu: { total: 16, available: 2, feePerDay: 2200 },
+        cabin: { total: 80, available: 15, feePerDay: 2500 },
+        generalWard: { total: 600, available: 55, feePerDay: 400 }
+      },
+      bloodInventory: {
+        "A+": 16, "A-": 3, "B+": 20, "B-": 4, "O+": 28, "O-": 5, "AB+": 8, "AB-": 2
+      },
+      hasInHousePharmacy: true,
+      inHousePharmacyName: "BSMMU Central Dispensary",
+      ambulanceFleetCount: 7,
+      verifiedPartner: true
+    },
+    {
+      id: "hosp_005",
+      name: "National Heart Foundation Hospital & Research Institute",
+      type: "Specialized Cardiovascular Center",
+      area: "Plot 4, Section 2, Mirpur",
+      city: "Dhaka",
+      distanceKm: 5.2,
+      phone: "+88029033442",
+      emergencyHotline: "01711889900",
+      rating: 4.9,
+      reviews: 1420,
+      image: "https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&q=80&w=600",
+      beds: {
+        icu: { total: 30, available: 12, feePerDay: 8000 },
+        ccu: { total: 25, available: 9, feePerDay: 7000 },
+        nicu: { total: 10, available: 2, feePerDay: 6000 },
+        cabin: { total: 65, available: 19, feePerDay: 4800 },
+        generalWard: { total: 180, available: 38, feePerDay: 1800 }
+      },
+      bloodInventory: {
+        "A+": 22, "A-": 7, "B+": 26, "B-": 8, "O+": 34, "O-": 9, "AB+": 10, "AB-": 3
+      },
+      hasInHousePharmacy: true,
+      inHousePharmacyName: "Heart Foundation Dispensary",
+      ambulanceFleetCount: 4,
+      verifiedPartner: true
+    }
+  ],
+  bloodDonors: [
+    {
+      id: "donor_001",
+      name: "Shahriar Hasan",
+      bloodGroup: "O+",
+      area: "Dhanmondi, Dhaka",
+      district: "Dhaka",
+      phone: "+8801719887766",
+      lastDonatedDate: "2026-06-12",
+      isAvailable: true,
+      totalDonations: 9,
+      verifiedBadge: true
+    },
+    {
+      id: "donor_002",
+      name: "Mehedi Hasan Rony",
+      bloodGroup: "A+",
+      area: "Mirpur 2, Dhaka",
+      district: "Dhaka",
+      phone: "+8801815443322",
+      lastDonatedDate: "2026-07-20",
+      isAvailable: true,
+      totalDonations: 6,
+      verifiedBadge: true
+    },
+    {
+      id: "donor_003",
+      name: "Dr. Sumaiya Akter",
+      bloodGroup: "B+",
+      area: "Shahbag, Dhaka",
+      district: "Dhaka",
+      phone: "+8801912556677",
+      lastDonatedDate: "2026-05-18",
+      isAvailable: true,
+      totalDonations: 12,
+      verifiedBadge: true
+    },
+    {
+      id: "donor_004",
+      name: "Rezwanul Karim",
+      bloodGroup: "AB+",
+      area: "Uttara Sector 11, Dhaka",
+      district: "Dhaka",
+      phone: "+8801614778899",
+      lastDonatedDate: "2026-08-05",
+      isAvailable: true,
+      totalDonations: 4,
+      verifiedBadge: true
+    },
+    {
+      id: "donor_005",
+      name: "Tanvir Anjum",
+      bloodGroup: "O-",
+      area: "Gulshan 1, Dhaka",
+      district: "Dhaka",
+      phone: "+8801711001122",
+      lastDonatedDate: "2026-04-10",
+      isAvailable: true,
+      totalDonations: 15,
+      verifiedBadge: true
+    },
+    {
+      id: "donor_006",
+      name: "Nafisa Tabassum",
+      bloodGroup: "B-",
+      area: "Banani, Dhaka",
+      district: "Dhaka",
+      phone: "+8801819776655",
+      lastDonatedDate: "2026-06-25",
+      isAvailable: true,
+      totalDonations: 5,
+      verifiedBadge: true
+    }
+  ],
+  bloodRequests: [
+    {
+      id: "breq_101",
+      patientName: "Md. Jahangir Alam",
+      bloodGroup: "O-",
+      bagsNeeded: 2,
+      hospitalName: "Square Hospital Dhaka (ICU Bed 07)",
+      area: "Panthapath, Dhaka",
+      urgency: "Immediate Emergency (Within 2 hours)",
+      reason: "Emergency Open Heart Surgery Bypass",
+      contactName: "Kamrul (Brother)",
+      contactPhone: "+8801712998877",
+      status: "open",
+      createdAt: "2026-11-08T01:10:00Z"
+    },
+    {
+      id: "breq_102",
+      patientName: "Taslima Begum",
+      bloodGroup: "B+",
+      bagsNeeded: 1,
+      hospitalName: "Dhaka Medical College & Hospital (Ward 14)",
+      area: "Bakshibazar, Dhaka",
+      urgency: "Today (Within 6 hours)",
+      reason: "Postpartum Hemorrhage / C-Section",
+      contactName: "Rahim (Husband)",
+      contactPhone: "+8801815332211",
+      status: "open",
+      createdAt: "2026-11-08T01:25:00Z"
+    }
+  ],
+  hospitalBedBookings: [],
+  appointments: [
+    {
+      id: "apt_101",
+      patientName: "Tanvir Ahmed",
+      patientPhone: "+8801712345678",
+      doctorId: "doc_001",
+      doctorName: "Dr. Farhana Yasmin",
+      doctorSpecialty: "General Physician",
+      consultationType: "video",
+      date: "2026-11-09",
+      time: "10:00 AM",
+      symptoms: "Mild fever and sore throat for 3 days",
+      fee: 600,
+      paymentStatus: "paid",
+      paymentMethod: "bkash",
+      status: "confirmed",
+      videoRoomUrl: "/consultation/room_apt_101",
+      createdAt: "2026-11-08T00:30:00Z"
+    }
+  ],
+  chamberBookings: [],
+  ambulanceBookings: [],
+  emergencyAlerts: [],
+  medicineOrders: [],
+  payments: [],
+  partnerApplications: []
+};
+
+function readDb() {
+  try {
+    if (!fs.existsSync(DB_FILE)) {
+      fs.writeFileSync(DB_FILE, JSON.stringify(initialData, null, 2), 'utf8');
+      return initialData;
+    }
+    const raw = fs.readFileSync(DB_FILE, 'utf8');
+    return JSON.parse(raw);
+  } catch (err) {
+    console.error("Error reading DB file:", err);
+    return initialData;
+  }
+}
+
+function writeDb(data) {
+  try {
+    fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2), 'utf8');
+  } catch (err) {
+    console.error("Error writing DB file:", err);
+  }
+}
+
+export const db = {
+  get: (collection) => {
+    const data = readDb();
+    return data[collection] || [];
+  },
+  find: (collection, predicate) => {
+    const data = readDb();
+    return (data[collection] || []).find(predicate);
+  },
+  filter: (collection, predicate) => {
+    const data = readDb();
+    return (data[collection] || []).filter(predicate);
+  },
+  insert: (collection, item) => {
+    const data = readDb();
+    if (!data[collection]) data[collection] = [];
+    data[collection].unshift(item);
+    writeDb(data);
+    return item;
+  },
+  update: (collection, id, updates) => {
+    const data = readDb();
+    const items = data[collection] || [];
+    const idx = items.findIndex(it => it.id === id);
+    if (idx !== -1) {
+      items[idx] = { ...items[idx], ...updates, updatedAt: new Date().toISOString() };
+      data[collection] = items;
+      writeDb(data);
+      return items[idx];
+    }
+    return null;
+  },
+  reset: () => {
+    writeDb(initialData);
+    return initialData;
+  }
+};
