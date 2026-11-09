@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Shield, AlertCircle, User, Globe, Menu, X, Sparkles, ChevronRight } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
+import Logo from './Logo';
 
 export default function Navbar({
   currentPage,
@@ -37,14 +38,12 @@ export default function Navbar({
               onClick={() => onNavigate('home')}
               className="flex items-center gap-3 text-left group"
             >
-              <div className="h-10 w-10 rounded-xl flex items-center justify-center text-white shadow-sm transition-colors" style={{ backgroundColor: 'var(--theme-primary)' }}>
-                <Shield className="h-5 w-5 stroke-[2.5]" />
-              </div>
+              <Logo size="md" />
               <div>
-                <span className="text-xl sm:text-2xl font-black tracking-normal" style={{ color: 'var(--theme-navy)' }}>
-                  NIRBHOY<span className="font-bold ml-1" style={{ color: 'var(--theme-primary)' }}>Health</span>
+                <span className="text-xl sm:text-2xl font-black tracking-normal text-[#21183B]">
+                  NIRBHOY<span className="font-bold ml-1 text-[#7c3aed]">Health</span>
                 </span>
-                <p className="text-[10px] font-semibold text-slate-500 tracking-wider uppercase">
+                <p className="text-[10px] font-bold text-slate-600 tracking-wider uppercase">
                   {lang === 'bn' ? 'নির্ভয় ডিজিটাল স্বাস্থ্যসেবা' : 'Digital Healthcare Bangladesh'}
                 </p>
               </div>

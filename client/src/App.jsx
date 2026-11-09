@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import EmergencySOSBanner from './components/EmergencySOSBanner';
 import Footer from './components/Footer';
+import MobileBottomNav from './components/MobileBottomNav';
+import FloatingSOSButton from './components/FloatingSOSButton';
 
 // Dedicated Pages
 import HomePage from './pages/HomePage';
@@ -371,6 +373,18 @@ export default function App() {
       <AdminDashboardModal
         open={adminModalOpen}
         onClose={() => setAdminModalOpen(false)}
+      />
+
+      {/* Persistent Floating Desktop SOS Button */}
+      <FloatingSOSButton
+        onSOSClick={() => handleOpenAmbulance('ICU Ambulance (Life Support)')}
+      />
+
+      {/* Mobile-First Sticky Bottom Navigation */}
+      <MobileBottomNav
+        currentPage={currentPage}
+        onNavigate={handleNavigate}
+        onSOSClick={() => handleOpenAmbulance('ICU Ambulance (Life Support)')}
       />
     </div>
   );

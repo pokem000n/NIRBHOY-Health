@@ -31,12 +31,20 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: #f8fafc;
-    color: #0f172a;
+    color: #1e293b;
     letter-spacing: normal;
+    line-height: 1.6;
+  }
+
+  /* High-Contrast Headings Hierarchy */
+  h1, h2, h3, h4, h5, h6 {
+    color: #21183B;
+    letter-spacing: normal !important;
+    font-weight: 800;
   }
 
   /* Prevent Bengali conjunct glyph overlapping caused by negative tracking */
-  h1, h2, h3, h4, h5, h6, p, span, button, a {
+  p, span, button, a {
     letter-spacing: normal !important;
   }
 

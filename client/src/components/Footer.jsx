@@ -1,6 +1,7 @@
 import React from 'react';
 import { Shield, Phone, Mail, MapPin, Heart } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import Logo from './Logo';
 
 export default function Footer({ onSOSClick, onAdminClick }) {
   const { lang, t } = useLanguage();
@@ -64,12 +65,10 @@ export default function Footer({ onSOSClick, onAdminClick }) {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
           {/* Brand info */}
           <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <div className="h-10 w-10 rounded-xl bg-blue-600 flex items-center justify-center text-white">
-                <Shield className="h-6 w-6 stroke-[2.5]" />
-              </div>
+            <div className="flex items-center gap-3">
+              <Logo size="md" />
               <span className="text-xl font-black tracking-tight text-white">
-                NIRBHOY<span className="text-blue-500 font-normal">Health</span>
+                NIRBHOY<span className="text-violet-400 font-bold ml-0.5">Health</span>
               </span>
             </div>
             <p className="text-xs text-slate-400 leading-relaxed">

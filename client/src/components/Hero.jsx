@@ -83,116 +83,110 @@ export default function Hero({ onConsultClick, onAmbulanceClick, onFindHospitalC
             </div>
           </div>
 
-          {/* Right Column: Interactive Clinical Card Showcase */}
+          {/* Right Column: Authentic Real Healthcare Photography + Floating Telehealth Showcase */}
           <div className="lg:col-span-5 relative">
-            <div className="relative mx-auto max-w-md bg-white rounded-2xl p-5 shadow-xl shadow-navy-950/5 border border-navy-100">
-              {/* Doctor Consultation Snippet Card */}
-              <div className="flex items-start gap-3.5 pb-4 border-b border-slate-100">
-                <div className="relative flex-shrink-0">
+            <div className="relative mx-auto max-w-lg">
+              {/* Background ambient aura with Midnight Violet & Lavender */}
+              <div className="absolute -inset-2 bg-gradient-to-tr from-[#7c3aed]/20 via-[#21183B]/10 to-[#ff1753]/15 rounded-3xl blur-2xl -z-10"></div>
+
+              {/* Main Real Healthcare Photography Frame */}
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-[#21183B]/15 bg-white">
+                <div className="relative h-72 sm:h-80 w-full overflow-hidden bg-slate-100">
                   <img
-                    src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=200"
-                    alt="Dr. Farhana Yasmin"
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = 'https://ui-avatars.com/api/?name=Farhana+Yasmin&background=7c3aed&color=fff&size=128';
-                    }}
-                    className="h-14 w-14 rounded-xl object-cover ring-1 ring-slate-200 bg-blue-50"
+                    src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=900"
+                    alt="Professional Healthcare Consultation at NIRBHOY Health"
+                    className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700"
                   />
-                  {/* Wired Electric Heartbeat Live Ping */}
-                  <span className="absolute -bottom-1 -right-1 flex h-3.5 w-3.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ backgroundColor: 'var(--theme-accent)' }}></span>
-                    <span className="relative inline-flex rounded-full h-3.5 w-3.5 border-2 border-white" style={{ backgroundColor: 'var(--theme-accent)' }}></span>
-                  </span>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between gap-1">
-                    <h4 className="font-bold text-navy-950 text-sm truncate">Dr. Farhana Yasmin</h4>
-                    <span className="bg-navy-50 text-navy-800 text-[10px] font-semibold px-2 py-0.5 rounded border border-navy-200">
-                      BMDC A-54321
+                  {/* Gradient Overlay for clinical text legibility */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#21183B]/90 via-[#21183B]/20 to-transparent"></div>
+
+                  {/* Top Floating Badge: Live Availability */}
+                  <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-slate-200/80 shadow-lg flex items-center gap-2">
+                    <span className="relative flex h-2.5 w-2.5">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
                     </span>
+                    <span className="text-xs font-black text-[#21183B]">৩৪ জন স্পেশালিস্ট লাইভ আছেন</span>
                   </div>
-                  <p className="text-xs text-blue-600 font-medium">FCPS (Medicine) • Dhaka Medical College</p>
-                  <div className="flex items-center gap-2 mt-1">
-                    <span className="flex items-center text-xs text-amber-500 font-bold">
-                      <Star className="h-3 w-3 fill-amber-400 text-amber-400 mr-1" /> 4.9 (142 reviews)
-                    </span>
-                    <span className="text-[10px] text-blue-800 font-semibold bg-blue-50 px-2 py-0.5 rounded-full border border-blue-200/60">
-                      Live for Video & Chamber
-                    </span>
+
+                  {/* Top Right Floating Badge: GPS Radar */}
+                  <div className="absolute top-4 right-4 bg-[#21183B]/90 backdrop-blur-md px-3 py-1.5 rounded-full border border-[#7c3aed]/40 text-white shadow-lg flex items-center gap-1.5">
+                    <span className="h-2 w-2 rounded-full bg-[#ff1753] animate-pulse"></span>
+                    <span className="text-[11px] font-bold text-violet-200">GPS অ্যাম্বুলেন্স: ৮-১২ মি.</span>
                   </div>
-                </div>
-              </div>
 
-              {/* Chamber Schedule Snippet */}
-              <div className="my-3 p-3 bg-navy-50/50 rounded-xl border border-navy-100 text-xs">
-                <div className="flex items-center justify-between text-slate-700 font-semibold">
-                  <span className="flex items-center gap-1.5 text-navy-950">
-                    <Building2 className="h-3.5 w-3.5 text-blue-600" />
-                    <span>Square Hospital (Panthapath)</span>
-                  </span>
-                  <span className="text-blue-700 font-bold">Room 402</span>
-                </div>
-                <div className="flex items-center justify-between text-[11px] text-slate-500 mt-1">
-                  <span>Visiting: Sat, Mon, Wed (6:00 PM - 9:00 PM)</span>
-                  <span className="text-blue-700 font-medium">Next Serial #04</span>
-                </div>
-              </div>
-
-              {/* Quick Action Matrix inside Card */}
-              <div className="grid grid-cols-2 gap-2.5 py-1">
-                <div
-                  onClick={onConsultClick}
-                  className="p-3 rounded-xl bg-white hover:bg-blue-50/40 cursor-pointer border border-slate-200 hover:border-blue-300 transition-all text-left group"
-                >
-                  <Video className="h-5 w-5 text-blue-600 mb-1" />
-                  <p className="text-xs font-bold text-navy-950 group-hover:text-blue-700 transition-colors">Video Call Doctor</p>
-                  <p className="text-[10px] text-slate-500">Wait time ~ 3 mins</p>
-                </div>
-
-                <div
-                  onClick={onAmbulanceClick}
-                  className="p-3 rounded-xl bg-white hover:bg-pulse-50/40 cursor-pointer border border-slate-200 hover:border-pulse-300 transition-all text-left group"
-                >
-                  <Ambulance className="h-5 w-5 text-pulse-electric mb-1" style={{ color: '#ff1753' }} />
-                  <p className="text-xs font-bold text-navy-950 group-hover:text-pulse-electric transition-colors" style={{ color: '#060b16' }}>Emergency Ambulance</p>
-                  <p className="text-[10px] text-slate-500">GPS Live Radar</p>
-                </div>
-
-                <div
-                  onClick={onFindHospitalClick}
-                  className="p-3 rounded-xl bg-white hover:bg-navy-50 cursor-pointer border border-slate-200 hover:border-navy-300 transition-all text-left group"
-                >
-                  <Building2 className="h-5 w-5 text-navy-700 mb-1" />
-                  <p className="text-xs font-bold text-navy-950 group-hover:text-navy-700 transition-colors">Hospital Bed Check</p>
-                  <p className="text-[10px] text-slate-500">ICU, CCU & Cabin</p>
-                </div>
-
-                <a
-                  href="#pharmacy"
-                  className="p-3 rounded-xl bg-white hover:bg-blue-50/40 cursor-pointer border border-slate-200 hover:border-blue-300 transition-all text-left group"
-                >
-                  <Pill className="h-5 w-5 text-blue-600 mb-1" />
-                  <p className="text-xs font-bold text-navy-950 group-hover:text-blue-700 transition-colors">Model Pharmacy</p>
-                  <p className="text-[10px] text-slate-500">45-min Home Delivery</p>
-                </a>
-              </div>
-
-              {/* Bottom Schedule Capsule */}
-              <div className="mt-3 text-white rounded-xl p-3 flex items-center justify-between text-xs" style={{ backgroundColor: 'var(--theme-navy)' }}>
-                <div className="flex items-center gap-2">
-                  <Clock className="h-4 w-4" style={{ color: 'var(--theme-primary-accent)' }} />
-                  <div>
-                    <span className="font-semibold text-slate-200">Next Video Consultation:</span>
-                    <span className="block text-[11px]" style={{ color: 'var(--theme-primary-light)' }}>Today at 10:30 AM (Available)</span>
+                  {/* Bottom Image Inset Info */}
+                  <div className="absolute bottom-4 left-4 right-4 text-white">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-violet-300 block">
+                      ১০০% বিএমডিসি ভেরিফাইড চিকিৎসক
+                    </span>
+                    <p className="text-sm font-extrabold text-white leading-tight mt-0.5">
+                      ডিজিটাল ভিডিও কল ও অফলাইন চেম্বার — তাৎক্ষণিক সিরিয়াল
+                    </p>
                   </div>
                 </div>
-                <button
-                  onClick={onConsultClick}
-                  className="text-white font-bold px-3.5 py-1.5 rounded-lg text-xs transition-colors shadow-xs"
-                  style={{ backgroundColor: 'var(--theme-primary)' }}
-                >
-                  Book ৳600
-                </button>
+
+                {/* Sub-Card: Live Doctor Profile Card */}
+                <div className="p-4 sm:p-5 bg-white space-y-3.5">
+                  <div className="flex items-start gap-3.5 pb-3 border-b border-slate-100">
+                    <div className="relative flex-shrink-0">
+                      <img
+                        src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=200"
+                        alt="Dr. Farhana Yasmin"
+                        className="h-14 w-14 rounded-2xl object-cover ring-2 ring-[#7c3aed]/30 bg-violet-50"
+                      />
+                      <span className="absolute -bottom-1 -right-1 flex h-4 w-4">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 bg-[#ff1753]"></span>
+                        <span className="relative inline-flex rounded-full h-4 w-4 border-2 border-white bg-[#ff1753]"></span>
+                      </span>
+                    </div>
+
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-1 flex-wrap">
+                        <h4 className="font-extrabold text-[#21183B] text-base truncate">ডাঃ ফারহানা ইয়াসমিন</h4>
+                        <span className="bg-emerald-50 text-emerald-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1">
+                          <CheckCircle2 className="h-3 w-3 text-emerald-600" /> BMDC A-54321
+                        </span>
+                      </div>
+                      <p className="text-xs text-[#7c3aed] font-bold">এফসিপিএস (মেডিসিন) • ঢাকা মেডিকেল কলেজ</p>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="flex items-center text-xs text-amber-500 font-extrabold">
+                          <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400 mr-1" /> ৪.৯ (১৪২ রিভিউ)
+                        </span>
+                        <span className="text-[10px] text-violet-800 font-bold bg-violet-50 px-2 py-0.5 rounded-full border border-violet-200">
+                          ভিডিও ও চেম্বার রেডি
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 2-Column Fast Actions */}
+                  <div className="grid grid-cols-2 gap-2.5">
+                    <button
+                      onClick={onConsultClick}
+                      className="p-3 rounded-xl bg-violet-50 hover:bg-violet-100/80 border border-violet-200 text-left transition-all group flex flex-col justify-between"
+                    >
+                      <div className="flex items-center justify-between w-full mb-1">
+                        <Video className="h-4 w-4 text-[#7c3aed]" />
+                        <span className="text-[9px] font-extrabold text-emerald-700 bg-emerald-100 px-1.5 py-0.2 rounded">লাইভ</span>
+                      </div>
+                      <span className="text-xs font-black text-[#21183B] group-hover:text-[#7c3aed]">ভিডিও কনসাল্টেশন</span>
+                      <span className="text-[10px] text-slate-500">অপেক্ষার সময় ~ ২ মিনিট</span>
+                    </button>
+
+                    <button
+                      onClick={onAmbulanceClick}
+                      className="p-3 rounded-xl bg-rose-50 hover:bg-rose-100/80 border border-rose-200 text-left transition-all group flex flex-col justify-between"
+                    >
+                      <div className="flex items-center justify-between w-full mb-1">
+                        <Ambulance className="h-4 w-4 text-[#ff1753]" />
+                        <span className="text-[9px] font-extrabold text-rose-700 bg-rose-100 px-1.5 py-0.2 rounded">জরুরি</span>
+                      </div>
+                      <span className="text-xs font-black text-[#21183B] group-hover:text-[#ff1753]">জিপিএস অ্যাম্বুলেন্স</span>
+                      <span className="text-[10px] text-slate-500">নিকটস্থ ড্রাইভার ডিসপ্যাচ</span>
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

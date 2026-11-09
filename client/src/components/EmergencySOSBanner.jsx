@@ -48,74 +48,74 @@ export default function EmergencySOSBanner({ onSOSClick }) {
   };
 
   return (
-    <div className="bg-navy-950 text-white border-b border-navy-900" style={{ backgroundColor: 'var(--theme-navy)', color: '#ffffff' }}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-3.5">
+    <div className="bg-[#21183B] text-white border-b-2 border-[#ff1753]/40 shadow-xl relative overflow-hidden">
+      {/* Subtle pulsating emergency glow */}
+      <div className="absolute top-0 right-0 w-96 h-full bg-gradient-to-l from-[#ff1753]/15 to-transparent pointer-events-none"></div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 sm:py-4">
         <div className="flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4">
           {/* Triage Info */}
-          <div className="flex items-center gap-3 text-center md:text-left">
-            <div className="h-9 w-9 rounded-xl border flex items-center justify-center flex-shrink-0" style={{ backgroundColor: 'var(--theme-navy-surface)', borderColor: 'var(--theme-navy-border)', color: 'var(--theme-accent)' }}>
-              <Siren className="h-5 w-5 animate-pulse" />
+          <div className="flex items-center gap-3.5 text-center md:text-left">
+            <div className="h-11 w-11 rounded-2xl bg-[#ff1753]/20 border-2 border-[#ff1753] flex items-center justify-center flex-shrink-0 shadow-lg shadow-[#ff1753]/30">
+              <Siren className="h-6 w-6 text-[#ff1753] animate-bounce" />
             </div>
             <div>
               <div className="flex items-center gap-2 justify-center md:justify-start">
-                <span className="text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded border" style={{ backgroundColor: 'var(--theme-accent-light)', borderColor: 'var(--theme-accent)', color: 'var(--theme-accent)' }}>
-                  {lang === 'bn' ? 'জরুরি চিকিৎসা সহায়তা' : 'EMERGENCY TRIAGE'}
+                <span className="text-[11px] font-black tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-[#ff1753] text-white shadow-xs">
+                  {lang === 'bn' ? 'জরুরি ইমার্জেন্সি সাপোর্ট' : 'CRITICAL EMERGENCY SOS'}
                 </span>
-                <span className="text-[11px] flex items-center gap-1 font-medium" style={{ color: 'var(--theme-primary-accent)' }}>
-                  <span className="h-1.5 w-1.5 rounded-full animate-pulse" style={{ backgroundColor: 'var(--theme-primary)' }}></span> Rapid Response Live
+                <span className="text-xs flex items-center gap-1.5 font-bold text-violet-300">
+                  <span className="h-2 w-2 rounded-full bg-emerald-400 animate-ping"></span>
+                  ৮-১২ মিনিট রেসপন্স লাইভ
                 </span>
               </div>
-              <p className="text-xs sm:text-sm font-medium text-slate-200 mt-0.5">
+              <p className="text-xs sm:text-sm font-semibold text-slate-100 mt-1 leading-snug">
                 {lang === 'bn'
-                  ? 'যেকোনো চিকিৎসা সংকটে এক ক্লিকে জিপিএস এলার্ট পাঠান অথবা সরকারি হটলাইনে কল করুন।'
-                  : 'Broadcast real-time GPS distress to nearby hospital teams or direct dial national hotlines.'}
+                  ? 'যেকোনো চিকিৎসা সংকটে ১-ট্যাপে জিপিএস অ্যাম্বুলেন্স ডাকুন অথবা সরকারি হটলাইনে সরাসরি কল করুন।'
+                  : 'Broadcast real-time GPS distress to nearby ambulance & ICU teams or direct dial hotlines.'}
               </p>
             </div>
           </div>
 
           {/* Quick Hotline Actions */}
-          <div className="flex items-center gap-2 flex-wrap justify-center md:justify-end">
+          <div className="flex items-center gap-2.5 flex-wrap justify-center md:justify-end">
             <a
               href="tel:999"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-slate-100 font-semibold text-xs transition-colors border border-slate-700 hover:border-slate-500"
-              style={{ backgroundColor: 'var(--theme-navy-surface)' }}
+              className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-amber-400 text-slate-950 font-black text-xs hover:bg-amber-300 transition-all shadow-md active:scale-95"
             >
-              <Phone className="h-3.5 w-3.5" style={{ color: 'var(--theme-primary-accent)' }} />
-              <span>999 Emergency</span>
+              <Phone className="h-4 w-4 text-slate-950" />
+              <span>৯৯৯ পুলিশ/অ্যাম্বুলেন্স</span>
             </a>
 
             <a
               href="tel:16263"
-              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-slate-100 font-semibold text-xs transition-colors border border-slate-700 hover:border-slate-500"
-              style={{ backgroundColor: 'var(--theme-navy-surface)' }}
+              className="hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#2a1f4b] hover:bg-[#3b2c63] text-white font-bold text-xs transition-colors border border-violet-700/60"
             >
-              <Phone className="h-3.5 w-3.5" style={{ color: 'var(--theme-primary-accent)' }} />
-              <span>16263 Shastho Batayan</span>
+              <Phone className="h-3.5 w-3.5 text-violet-300" />
+              <span>১৬২৬৩ স্বাস্থ্য বাতায়ন</span>
             </a>
 
             {quickSent ? (
-              <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-white font-bold text-xs" style={{ backgroundColor: 'var(--theme-primary)' }}>
+              <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 text-white font-black text-xs shadow-lg animate-pulse">
                 <CheckCircle2 className="h-4 w-4" />
-                <span>{lang === 'bn' ? 'SOS পাঠানো হয়েছে' : 'Dispatched'}</span>
+                <span>{lang === 'bn' ? '✓ জরুরি সিগন্যাল পাঠানো হয়েছে' : '✓ SOS Dispatched'}</span>
               </div>
             ) : (
               <button
                 onClick={handleInstantGPSDispatch}
                 disabled={loading}
-                className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-white font-bold text-xs transition-all shadow-sm animate-wired-pulse"
-                style={{ backgroundColor: 'var(--theme-accent)', borderColor: 'var(--theme-accent)' }}
+                className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#ff1753] hover:bg-[#e11d48] text-white font-black text-xs sm:text-sm shadow-xl shadow-[#ff1753]/40 border-2 border-white/30 active:scale-95 transition-all animate-pulse"
               >
-                <MapPin className="h-3.5 w-3.5 text-white" />
-                <span>{loading ? 'Pinging...' : (lang === 'bn' ? 'GPS SOS প্রেরণ' : 'One-Tap GPS SOS')}</span>
+                <MapPin className="h-4 w-4 text-white" />
+                <span>{loading ? 'অনুসন্ধান চলছে...' : (lang === 'bn' ? '১-ট্যাপে GPS অ্যাম্বুলেন্স' : 'One-Tap GPS SOS')}</span>
               </button>
             )}
 
             <button
               onClick={onSOSClick}
-              className="px-3 py-1.5 rounded-lg font-semibold text-xs transition-colors border"
-              style={{ backgroundColor: 'var(--theme-navy-surface)', color: 'var(--theme-primary-accent)', borderColor: 'var(--theme-primary-border)' }}
+              className="px-4 py-2 rounded-xl font-extrabold text-xs bg-[#7c3aed] hover:bg-[#6d28d9] text-white transition-all shadow-md shadow-[#7c3aed]/25"
             >
-              {lang === 'bn' ? 'অ্যাম্বুলেন্স ডাকুন' : 'Call Ambulance'}
+              {lang === 'bn' ? 'পূর্ণাঙ্গ ট্র্যাকার' : 'Live Tracker'}
             </button>
           </div>
         </div>
