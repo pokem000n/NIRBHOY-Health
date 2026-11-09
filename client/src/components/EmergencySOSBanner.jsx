@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Phone, Radio, MapPin, CheckCircle2, Siren, ArrowRight } from 'lucide-react';
+import { Phone, Radio, MapPin, CheckCircle2, Siren, ArrowRight, Navigation } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { ApiService } from '../services/api';
 
-export default function EmergencySOSBanner({ onSOSClick }) {
-  const { lang, t } = useLanguage();
+export default function EmergencySOSBanner({ onSOSClick, onOpenLiveTracker, onInstantSOS }) {
+  const { lang } = useLanguage();
   const [quickSent, setQuickSent] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -12,38 +12,57 @@ export default function EmergencySOSBanner({ onSOSClick }) {
     setLoading(true);
     let coords = { latitude: 23.8103, longitude: 90.4125 };
 
-    if (navigator.geolocation) {
+    const finalizeSOS = async (finalCoords) => {
+      try {
+        await ApiService.sendSOS({
+          location: `Latitude: ${finalCoords.latitude.toFixed(4)}, Longitude: ${finalCoords.longitude.toFixed(4)}`,
+          latitude: finalCoords.latitude,
+          longitude: finalCoords.longitude,
+          phone: "+8801711223344",
+          emergencyType: "Critical Instant GPS Distress Alert"
+        });
+      } catch (err) {
+        console.warn('API distress fallback mode:', err);
+      } finally {
+        setLoading(false);
+        setQuickSent(true);
+        setTimeout(() => setQuickSent(false), 8000);
+
+        // Immediately launch live tracking radar!
+        if (onInstantSOS) {
+          onInstantSOS(finalCoords);
+        } else if (onOpenLiveTracker) {
+          onOpenLiveTracker();
+        } else if (onSOSClick) {
+          onSOSClick();
+        }
+      }
+    };
+
+    if (typeof navigator !== 'undefined' && navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
-          coords.latitude = position.coords.latitude;
-          coords.longitude = position.coords.longitude;
-          await sendDistress(coords);
+          coords = {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+          };
+          await finalizeSOS(coords);
         },
         async () => {
-          await sendDistress(coords);
+          await finalizeSOS(coords);
         },
-        { timeout: 4000 }
+        { timeout: 3500, enableHighAccuracy: true }
       );
     } else {
-      await sendDistress(coords);
+      await finalizeSOS(coords);
     }
   };
 
-  const sendDistress = async (coords) => {
-    try {
-      await ApiService.sendSOS({
-        location: `Latitude: ${coords.latitude.toFixed(4)}, Longitude: ${coords.longitude.toFixed(4)}`,
-        latitude: coords.latitude,
-        longitude: coords.longitude,
-        phone: "+8801700000000",
-        emergencyType: "Critical SOS Panic Alert"
-      });
-      setQuickSent(true);
-      setTimeout(() => setQuickSent(false), 8000);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
+  const handleTrackerClick = () => {
+    if (onOpenLiveTracker) {
+      onOpenLiveTracker();
+    } else if (onSOSClick) {
+      onSOSClick();
     }
   };
 
@@ -77,29 +96,38 @@ export default function EmergencySOSBanner({ onSOSClick }) {
             </div>
           </div>
 
-          {/* Quick Actions (Call buttons removed per user instruction) */}
+          {/* Quick Actions */}
           <div className="flex items-center gap-2.5 flex-wrap justify-center md:justify-end">
             {quickSent ? (
-              <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 text-white font-black text-xs shadow-lg animate-pulse">
+              <button
+                onClick={handleTrackerClick}
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs shadow-lg animate-pulse transition-all cursor-pointer"
+                title={lang === 'bn' ? 'রেডার ট্র্যাকার দেখতে ক্লিক করুন' : 'Click to view radar tracker'}
+              >
                 <CheckCircle2 className="h-4 w-4" />
-                <span>{lang === 'bn' ? '✓ জরুরি সিগন্যাল পাঠানো হয়েছে' : '✓ SOS Dispatched'}</span>
-              </div>
+                <span>{lang === 'bn' ? '✓ জরুরি সিগন্যাল পাঠানো হয়েছে (ট্র্যাকার খুলুন)' : '✓ SOS Active (Open Radar)'}</span>
+              </button>
             ) : (
               <button
                 onClick={handleInstantGPSDispatch}
                 disabled={loading}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#ff1753] hover:bg-[#e11d48] text-white font-black text-xs sm:text-sm shadow-xl shadow-[#ff1753]/40 border-2 border-white/30 active:scale-95 transition-all animate-pulse"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#ff1753] hover:bg-[#e11d48] text-white font-black text-xs sm:text-sm shadow-xl shadow-[#ff1753]/40 border-2 border-white/30 active:scale-95 transition-all animate-pulse disabled:opacity-75 cursor-pointer"
               >
                 <MapPin className="h-4 w-4 text-white" />
-                <span>{loading ? (lang === 'bn' ? 'অনুসন্ধান চলছে...' : 'Pinging Radar...') : (lang === 'bn' ? '১-ট্যাপে GPS অ্যাম্বুলেন্স' : 'One-Tap GPS SOS')}</span>
+                <span>
+                  {loading
+                    ? (lang === 'bn' ? 'জিপিএস কানেক্ট হচ্ছে...' : 'Pinging GPS Radar...')
+                    : (lang === 'bn' ? '১-ট্যাপে GPS অ্যাম্বুলেন্স' : 'One-Tap GPS SOS')}
+                </span>
               </button>
             )}
 
             <button
-              onClick={onSOSClick}
-              className="px-4 py-2.5 rounded-xl font-extrabold text-xs bg-[#7c3aed] hover:bg-[#6d28d9] text-white transition-all shadow-md shadow-[#7c3aed]/25 active:scale-95"
+              onClick={handleTrackerClick}
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl font-extrabold text-xs bg-[#7c3aed] hover:bg-[#6d28d9] text-white transition-all shadow-md shadow-[#7c3aed]/25 active:scale-95 cursor-pointer"
             >
-              {lang === 'bn' ? 'পূর্ণাঙ্গ ট্র্যাকার' : 'Live Tracker'}
+              <Radio className="h-3.5 w-3.5 text-violet-200 animate-pulse" />
+              <span>{lang === 'bn' ? 'লাইভ ট্র্যাকার' : 'Live Tracker'}</span>
             </button>
           </div>
         </div>

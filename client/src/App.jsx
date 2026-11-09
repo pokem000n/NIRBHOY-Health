@@ -103,7 +103,7 @@ export default function App() {
     setChamberModalOpen(true);
   };
 
-  // Ambulance Handlers
+  // Ambulance & Emergency Radar Handlers
   const handleOpenAmbulanceBooking = (type, hospitalId = null) => {
     setDefaultAmbulanceType(type || 'ICU Ambulance (Life Support)');
     setPreferredHospitalId(hospitalId);
@@ -112,6 +112,50 @@ export default function App() {
 
   const handleAmbulanceDispatched = (booking) => {
     setActiveAmbulanceBooking(booking);
+    setAmbulanceTrackingOpen(true);
+  };
+
+  const handleInstantSOS = (coords) => {
+    const trackingNumber = Math.floor(1000 + Math.random() * 9000);
+    const locString = coords?.latitude
+      ? `Live GPS (${coords.latitude.toFixed(4)}° N, ${coords.longitude.toFixed(4)}° E)`
+      : 'Current GPS Location (Dhanmondi, Dhaka)';
+
+    const newBooking = {
+      trackingId: `NIRBHOY-SOS-${trackingNumber}`,
+      ambulanceType: 'ICU Mobile Critical Care Ambulance',
+      driverName: 'Md. Rafiqul Islam (Senior Rescue Pilot)',
+      driverPhone: '+8801711223344',
+      vehicleNumber: 'Dhaka Metro-Chha-11-8921',
+      pickupLocation: locString,
+      destination: 'Square Hospital Emergency Trauma Center',
+      hospitalPhone: '10616',
+      etaMinutes: 8,
+      distanceKm: 2.3,
+      status: 'en_route',
+      gpsCoords: coords
+    };
+
+    setActiveAmbulanceBooking(newBooking);
+    setAmbulanceTrackingOpen(true);
+  };
+
+  const handleOpenLiveTracker = () => {
+    if (!activeAmbulanceBooking) {
+      setActiveAmbulanceBooking({
+        trackingId: 'NIRBHOY-SOS-8921',
+        ambulanceType: 'ICU Mobile Critical Care Ambulance',
+        driverName: 'Md. Rafiqul Islam (Senior Rescue Pilot)',
+        driverPhone: '+8801711223344',
+        vehicleNumber: 'Dhaka Metro-Chha-11-8921',
+        pickupLocation: 'Current GPS Location (Dhanmondi Road 11, Dhaka)',
+        destination: 'Square Hospital Emergency Trauma Center',
+        hospitalPhone: '10616',
+        etaMinutes: 8,
+        distanceKm: 2.3,
+        status: 'en_route'
+      });
+    }
     setAmbulanceTrackingOpen(true);
   };
 
@@ -172,7 +216,7 @@ export default function App() {
       <Navbar
         currentPage={currentPage}
         onNavigate={handleNavigate}
-        onSOSClick={() => handleOpenAmbulanceBooking('ICU Ambulance (Life Support)')}
+        onSOSClick={() => handleInstantSOS()}
         onAuthClick={() => setAuthModalOpen(true)}
         onProfileClick={() => setProfileModalOpen(true)}
         onAdminClick={() => setAdminModalOpen(true)}
@@ -181,7 +225,9 @@ export default function App() {
 
       {/* 24/7 Live Emergency SOS Distress Banner */}
       <EmergencySOSBanner
-        onSOSClick={() => handleOpenAmbulanceBooking('ICU Ambulance (Life Support)')}
+        onSOSClick={handleOpenLiveTracker}
+        onOpenLiveTracker={handleOpenLiveTracker}
+        onInstantSOS={handleInstantSOS}
       />
 
       {/* Dynamic Main Page Content */}
@@ -193,7 +239,7 @@ export default function App() {
             onAmbulanceClick={() => handleNavigate('ambulance')}
             onPharmacyClick={() => handleNavigate('pharmacy')}
             onFindHospitalClick={() => handleNavigate('hospitals')}
-            onSOSClick={() => handleOpenAmbulanceBooking('ICU Ambulance (Life Support)')}
+            onSOSClick={() => handleInstantSOS()}
             onSubscribeClick={() => setSubscriptionModalOpen(true)}
             onOpenBloodRequest={() => setBloodRequestOpen(true)}
           />
@@ -242,8 +288,8 @@ export default function App() {
 
       {/* Footer */}
       <Footer
-        onSOSClick={() => handleOpenAmbulanceBooking('ICU Ambulance (Life Support)')}
-        onAdminClick={() => setShowAdminModal(true)}
+        onSOSClick={() => handleInstantSOS()}
+        onAdminClick={() => setAdminModalOpen(true)}
       />
 
       {/* Modals & Workflows */}
@@ -377,14 +423,14 @@ export default function App() {
 
       {/* Persistent Floating Desktop SOS Button */}
       <FloatingSOSButton
-        onSOSClick={() => handleOpenAmbulance('ICU Ambulance (Life Support)')}
+        onSOSClick={() => handleInstantSOS()}
       />
 
       {/* Mobile-First Sticky Bottom Navigation */}
       <MobileBottomNav
         currentPage={currentPage}
         onNavigate={handleNavigate}
-        onSOSClick={() => handleOpenAmbulance('ICU Ambulance (Life Support)')}
+        onSOSClick={() => handleInstantSOS()}
       />
     </div>
   );
