@@ -3,17 +3,17 @@
 @tailwind utilities;
 
 :root {
-  /* Official Brand Identity: Deep Lavender (#7c3aed) + Obsidian Midnight (#0b0f19) + Heartbeat Red (#ff1753) */
+  /* Official Brand Identity: Deep Electric Lavender (#7c3aed) + Midnight Violet (#21183B) + Heartbeat Red (#ff1753) */
   --theme-primary: #7c3aed;
   --theme-primary-hover: #6d28d9;
   --theme-primary-light: #f5f3ff;
   --theme-primary-border: #ddd6fe;
   --theme-primary-text: #5b21b6;
   --theme-primary-accent: #a78bfa;
-  --theme-navy: #0b0f19;
-  --theme-navy-surface: #111827;
-  --theme-navy-border: #1e293b;
-  --theme-navy-light: #f1f5f9;
+  --theme-navy: #21183B;
+  --theme-navy-surface: #2a1f4b;
+  --theme-navy-border: #3b2c63;
+  --theme-navy-light: #f5f3ff;
   --theme-accent: #ff1753;
   --theme-accent-hover: #e11d48;
   --theme-accent-light: #fff1f2;

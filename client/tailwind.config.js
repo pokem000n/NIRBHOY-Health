@@ -7,19 +7,19 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Major Color 1: Midnight Obsidian Black (Authoritative, Institutional, Deep)
+        // Major Color 1: Midnight Violet (Deep, Velvet, Luxury Dark)
         navy: {
-          50: '#f1f5f9',
-          100: '#e2e8f0',
-          200: '#cbd5e1',
+          50: '#f5f3ff',
+          100: '#ede9fe',
+          200: '#ddd6fe',
           300: '#94a3b8',
           400: '#64748b',
-          500: '#334155',
-          600: '#1e293b',
-          700: '#0f172a',
-          800: '#111827',
-          900: '#0b0f19',
-          950: '#0b0f19', // Deep Obsidian Midnight Black
+          500: '#4c377d',
+          600: '#3b2c63',
+          700: '#2e224e',
+          800: '#2a1f4b',
+          900: '#21183B',
+          950: '#21183B', // Midnight Violet (#21183B)
         },
         // Major Color 2: Deep Electric Lavender / Royal Violet (Biotech & Precision Care)
         // 100% distinct from Arogga's Teal and DocTime's Blue
