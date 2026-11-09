@@ -106,22 +106,26 @@ export default function Hero({ onConsultClick, onAmbulanceClick, onFindHospitalC
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                       <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
                     </span>
-                    <span className="text-xs font-black text-[#21183B]">৩৪ জন স্পেশালিস্ট লাইভ আছেন</span>
+                    <span className="text-xs font-black text-[#21183B]">
+                      {lang === 'bn' ? '৩৪ জন স্পেশালিস্ট লাইভ আছেন' : '34 Specialists Live Online'}
+                    </span>
                   </div>
 
                   {/* Top Right Floating Badge: GPS Radar */}
                   <div className="absolute top-4 right-4 bg-[#21183B]/90 backdrop-blur-md px-3 py-1.5 rounded-full border border-[#7c3aed]/40 text-white shadow-lg flex items-center gap-1.5">
                     <span className="h-2 w-2 rounded-full bg-[#ff1753] animate-pulse"></span>
-                    <span className="text-[11px] font-bold text-violet-200">GPS অ্যাম্বুলেন্স: ৮-১২ মি.</span>
+                    <span className="text-[11px] font-bold text-violet-200">
+                      {lang === 'bn' ? 'GPS অ্যাম্বুলেন্স: ৮-১২ মি.' : 'GPS Ambulance: 8-12 min'}
+                    </span>
                   </div>
 
                   {/* Bottom Image Inset Info */}
                   <div className="absolute bottom-4 left-4 right-4 text-white">
                     <span className="text-[10px] font-bold uppercase tracking-wider text-violet-300 block">
-                      ১০০% বিএমডিসি ভেরিফাইড চিকিৎসক
+                      {lang === 'bn' ? '১০০% বিএমডিসি ভেরিফাইড চিকিৎসক' : '100% BMDC Verified Doctors'}
                     </span>
                     <p className="text-sm font-extrabold text-white leading-tight mt-0.5">
-                      ডিজিটাল ভিডিও কল ও অফলাইন চেম্বার — তাৎক্ষণিক সিরিয়াল
+                      {lang === 'bn' ? 'ডিজিটাল ভিডিও কল ও অফলাইন চেম্বার — তাৎক্ষণিক সিরিয়াল' : 'Digital Video Call & Chamber Serial — Instant Booking'}
                     </p>
                   </div>
                 </div>
@@ -143,18 +147,22 @@ export default function Hero({ onConsultClick, onAmbulanceClick, onFindHospitalC
 
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between gap-1 flex-wrap">
-                        <h4 className="font-extrabold text-[#21183B] text-base truncate">ডাঃ ফারহানা ইয়াসমিন</h4>
+                        <h4 className="font-extrabold text-[#21183B] text-base truncate">
+                          {lang === 'bn' ? 'ডাঃ ফারহানা ইয়াসমিন' : 'Dr. Farhana Yasmin'}
+                        </h4>
                         <span className="bg-emerald-50 text-emerald-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1">
                           <CheckCircle2 className="h-3 w-3 text-emerald-600" /> BMDC A-54321
                         </span>
                       </div>
-                      <p className="text-xs text-[#7c3aed] font-bold">এফসিপিএস (মেডিসিন) • ঢাকা মেডিকেল কলেজ</p>
+                      <p className="text-xs text-[#7c3aed] font-bold">
+                        {lang === 'bn' ? 'এফসিপিএস (মেডিসিন) • ঢাকা মেডিকেল কলেজ' : 'FCPS (Medicine) • Dhaka Medical College'}
+                      </p>
                       <div className="flex items-center gap-2 mt-1">
                         <span className="flex items-center text-xs text-amber-500 font-extrabold">
-                          <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400 mr-1" /> ৪.৯ (১৪২ রিভিউ)
+                          <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400 mr-1" /> {lang === 'bn' ? '৪.৯ (১৪২ রিভিউ)' : '4.9 (142 reviews)'}
                         </span>
                         <span className="text-[10px] text-violet-800 font-bold bg-violet-50 px-2 py-0.5 rounded-full border border-violet-200">
-                          ভিডিও ও চেম্বার রেডি
+                          {lang === 'bn' ? 'ভিডিও ও চেম্বার রেডি' : 'Video & Chamber Ready'}
                         </span>
                       </div>
                     </div>
@@ -168,10 +176,16 @@ export default function Hero({ onConsultClick, onAmbulanceClick, onFindHospitalC
                     >
                       <div className="flex items-center justify-between w-full mb-1">
                         <Video className="h-4 w-4 text-[#7c3aed]" />
-                        <span className="text-[9px] font-extrabold text-emerald-700 bg-emerald-100 px-1.5 py-0.2 rounded">লাইভ</span>
+                        <span className="text-[9px] font-extrabold text-emerald-700 bg-emerald-100 px-1.5 py-0.2 rounded">
+                          {lang === 'bn' ? 'লাইভ' : 'LIVE'}
+                        </span>
                       </div>
-                      <span className="text-xs font-black text-[#21183B] group-hover:text-[#7c3aed]">ভিডিও কনসাল্টেশন</span>
-                      <span className="text-[10px] text-slate-500">অপেক্ষার সময় ~ ২ মিনিট</span>
+                      <span className="text-xs font-black text-[#21183B] group-hover:text-[#7c3aed]">
+                        {lang === 'bn' ? 'ভিডিও কনসাল্টেশন' : 'Video Consultation'}
+                      </span>
+                      <span className="text-[10px] text-slate-500">
+                        {lang === 'bn' ? 'অপেক্ষার সময় ~ ২ মিনিট' : 'Wait Time ~ 2 mins'}
+                      </span>
                     </button>
 
                     <button
@@ -180,10 +194,16 @@ export default function Hero({ onConsultClick, onAmbulanceClick, onFindHospitalC
                     >
                       <div className="flex items-center justify-between w-full mb-1">
                         <Ambulance className="h-4 w-4 text-[#ff1753]" />
-                        <span className="text-[9px] font-extrabold text-rose-700 bg-rose-100 px-1.5 py-0.2 rounded">জরুরি</span>
+                        <span className="text-[9px] font-extrabold text-rose-700 bg-rose-100 px-1.5 py-0.2 rounded">
+                          {lang === 'bn' ? 'জরুরি' : 'EMERGENCY'}
+                        </span>
                       </div>
-                      <span className="text-xs font-black text-[#21183B] group-hover:text-[#ff1753]">জিপিএস অ্যাম্বুলেন্স</span>
-                      <span className="text-[10px] text-slate-500">নিকটস্থ ড্রাইভার ডিসপ্যাচ</span>
+                      <span className="text-xs font-black text-[#21183B] group-hover:text-[#ff1753]">
+                        {lang === 'bn' ? 'জিপিএস অ্যাম্বুলেন্স' : 'GPS Ambulance'}
+                      </span>
+                      <span className="text-[10px] text-slate-500">
+                        {lang === 'bn' ? 'নিকটস্থ ড্রাইভার ডিসপ্যাচ' : 'Nearby Driver Dispatch'}
+                      </span>
                     </button>
                   </div>
                 </div>

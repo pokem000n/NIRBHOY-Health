@@ -122,18 +122,24 @@ export default function BloodDonationPage({ onOpenBloodRequest, onOpenDonorRegis
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ff1753]/20 border border-[#ff1753]/50 text-white text-xs font-black mb-2">
                 <span className="h-2 w-2 rounded-full bg-[#ff1753] animate-ping"></span>
-                <span>লাইভ সেন্ট্রাল ব্লাড ব্যাংক ইনভেন্টরি</span>
+                <span>{lang === 'bn' ? 'লাইভ সেন্ট্রাল ব্লাড ব্যাংক ইনভেন্টরি' : 'Live Central Blood Bank Inventory'}</span>
               </div>
               <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
-                ঢাকার শীর্ষ হাসপাতালগুলোতে রক্তের রিয়েল-টাইম মজুদ
+                {lang === 'bn' ? 'ঢাকার শীর্ষ হাসপাতালগুলোতে রক্তের রিয়েল-টাইম মজুদ' : 'Real-Time Hospital Blood Stock Across Dhaka'}
               </h2>
               <p className="text-xs text-violet-200/80 mt-1">
-                স্কয়ার, বিএসএমএমইউ, ঢাকা মেডিকেল ও ন্যাশনাল হার্ট ফাউন্ডেশনে বর্তমানে সংরক্ষিত মোট রক্তের ব্যাগ:
+                {lang === 'bn'
+                  ? 'স্কয়ার, বিএসএমএমইউ, ঢাকা মেডিকেল ও ন্যাশনাল হার্ট ফাউন্ডেশনে বর্তমানে সংরক্ষিত মোট রক্তের ব্যাগ:'
+                  : 'Total verified blood units in cold storage at Square, BSMMU, DMCH & NICVD:'}
               </p>
             </div>
             <div className="text-right self-start md:self-auto">
-              <span className="text-2xl sm:text-3xl font-black text-emerald-400 block leading-none">২১৭+ ব্যাগ</span>
-              <span className="text-[11px] font-bold text-violet-300">ভেরিফাইড ও সংরক্ষিত</span>
+              <span className="text-2xl sm:text-3xl font-black text-emerald-400 block leading-none">
+                {lang === 'bn' ? '২১৭+ ব্যাগ' : '217+ Units'}
+              </span>
+              <span className="text-[11px] font-bold text-violet-300">
+                {lang === 'bn' ? 'ভেরিফাইড ও সংরক্ষিত' : 'Verified in Cold Storage'}
+              </span>
             </div>
           </div>
 
@@ -161,7 +167,9 @@ export default function BloodDonationPage({ onOpenBloodRequest, onOpenDonorRegis
                 <span className="text-sm font-black text-white block">{stock.bg}</span>
                 <span className="text-lg font-black text-white block mt-0.5">{stock.bags}</span>
                 <span className={`text-[10px] font-bold block ${stock.critical ? 'text-[#ff4b75]' : 'text-slate-400'}`}>
-                  {stock.critical ? 'সংকটপূর্ণ' : 'মজুদ আছে'}
+                  {stock.critical
+                    ? (lang === 'bn' ? 'সংকটপূর্ণ' : 'Critical')
+                    : (lang === 'bn' ? 'মজুদ আছে' : 'In Stock')}
                 </span>
               </div>
             ))}
@@ -171,7 +179,9 @@ export default function BloodDonationPage({ onOpenBloodRequest, onOpenDonorRegis
         {/* Blood Group Filter Pills */}
         <div className="bg-white rounded-2xl p-4 sm:p-5 border-2 border-slate-200 shadow-sm mb-8">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-            <span className="text-xs font-black text-slate-900 uppercase tracking-wider">রক্তের গ্রুপ অনুযায়ী ফিল্টার করুন:</span>
+            <span className="text-xs font-black text-slate-900 uppercase tracking-wider">
+              {lang === 'bn' ? 'রক্তের গ্রুপ অনুযায়ী ফিল্টার করুন:' : 'Filter by Blood Group:'}
+            </span>
             <div className="flex items-center gap-2 overflow-x-auto w-full sm:w-auto scrollbar-none">
               {['All', 'A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'].map((bg) => (
                 <button
@@ -309,8 +319,12 @@ export default function BloodDonationPage({ onOpenBloodRequest, onOpenDonorRegis
         {activeTab === 'donors' && (
           <div className="space-y-4">
             <div className="flex items-center justify-between mb-1">
-              <h3 className="font-black text-slate-900 text-lg">নিকটস্থ নিবন্ধিত লাইভ রক্তদাতাগণ (Live Distance & Proximity)</h3>
-              <span className="text-xs text-slate-500">Contact directly during emergencies</span>
+              <h3 className="font-black text-slate-900 text-lg">
+                {lang === 'bn' ? 'নিকটস্থ নিবন্ধিত লাইভ রক্তদাতাগণ (দূরত্ব অনুযায়ী)' : 'Nearby Registered Live Donors (Distance & Proximity)'}
+              </h3>
+              <span className="text-xs text-slate-500">
+                {lang === 'bn' ? 'জরুরি প্রয়োজনে সরাসরি কল করুন' : 'Contact directly during medical emergencies'}
+              </span>
             </div>
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -330,33 +344,46 @@ export default function BloodDonationPage({ onOpenBloodRequest, onOpenDonorRegis
                         <div>
                           <span className="text-[10px] font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1">
                             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-ping"></span>
-                            {activeTime}
+                            {lang === 'bn' ? activeTime.replace('Active Now', 'এখনই সক্রিয়').replace('Active 5m ago', '৫ মি. আগে সক্রিয়').replace('Active 10m ago', '১০ মি. আগে সক্রিয়') : activeTime}
                           </span>
                         </div>
                       </div>
 
                       <span className="text-xs font-black text-[#7c3aed] bg-violet-50 px-2.5 py-1 rounded-xl border border-violet-200">
-                        📍 {distance} away
+                        📍 {distance} {lang === 'bn' ? 'দূরে' : 'away'}
                       </span>
                     </div>
 
                     <h4 className="font-black text-slate-900 text-base group-hover:text-[#ff1753] transition-colors">{donor.name}</h4>
-                    <p className="text-xs text-slate-500 flex items-center gap-1 mt-0.5">
-                      <MapPin className="h-3.5 w-3.5 text-slate-400" /> {donor.area}, {donor.district}
+                    <p className="text-xs text-slate-600 font-semibold flex items-center gap-1.5 mt-1">
+                      <MapPin className="h-3.5 w-3.5 text-[#ff1753] flex-shrink-0" /> {donor.area}, {donor.district}
                     </p>
-                    <p className="text-[11px] text-slate-400 mt-1.5 font-normal">
-                      Donated {donor.totalDonations} times • Last: {donor.lastDonatedDate}
+                    <div className="mt-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-between text-xs">
+                      <span className="text-slate-600 font-semibold">
+                        {lang === 'bn' ? 'মোট রক্তদান:' : 'Total Donations:'}
+                      </span>
+                      <span className="font-black text-[#21183B]">
+                        {donor.totalDonations} {lang === 'bn' ? 'বার' : 'times'}
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-slate-500 font-medium mt-1">
+                      {lang === 'bn' ? 'সর্বশেষ রক্তদান:' : 'Last Donated:'} {donor.lastDonatedDate}
                     </p>
                   </div>
 
                   <div className="mt-3.5 pt-3 border-t border-slate-100 flex items-center justify-between">
-                    <span className="font-black text-slate-900 text-xs">{donor.phone}</span>
+                    <div>
+                      <span className="text-[10px] text-slate-400 block font-bold uppercase tracking-wider">
+                        {lang === 'bn' ? 'সরাসরি ফোন' : 'Direct Phone'}
+                      </span>
+                      <span className="font-black text-slate-900 text-xs block">{donor.phone}</span>
+                    </div>
                     <a
                       href={`tel:${donor.phone}`}
                       className="px-3.5 py-2 rounded-xl bg-[#ff1753] hover:bg-[#e11d48] text-white font-black text-xs flex items-center gap-1 shadow-md shadow-[#ff1753]/30 transition-all active:scale-95"
                     >
                       <Phone className="h-3.5 w-3.5" />
-                      <span>Call Donor</span>
+                      <span>{lang === 'bn' ? 'কল করুন' : 'Call Donor'}</span>
                     </a>
                   </div>
                 </div>

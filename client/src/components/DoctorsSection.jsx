@@ -174,7 +174,9 @@ export default function DoctorsSection({ onDoctorSelect }) {
                       <div className="flex items-center gap-1 text-amber-600 font-black">
                         <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-500" />
                         <span>{doctor.rating}</span>
-                        <span className="text-slate-500 font-semibold text-[11px]">({doctor.reviews} রোগী)</span>
+                        <span className="text-slate-500 font-semibold text-[11px]">
+                          ({doctor.reviews} {lang === 'bn' ? 'রোগী' : 'reviews'})
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -184,10 +186,14 @@ export default function DoctorsSection({ onDoctorSelect }) {
                     <div className="flex items-center justify-between text-xs font-bold text-slate-800 mb-1.5">
                       <span className="flex items-center gap-1.5 text-[#21183B]">
                         <Clock className="h-3.5 w-3.5 text-[#7c3aed]" /> 
-                        {doctor.available ? 'তাৎক্ষণিক ভিডিও কল উপলব্ধ' : 'আজকের চেম্বার সময়সূচি:'}
+                        {doctor.available
+                          ? (lang === 'bn' ? 'তাৎক্ষণিক ভিডিও কল উপলব্ধ' : 'Instant Video Call Available')
+                          : (lang === 'bn' ? 'আজকের চেম্বার সময়সূচি:' : "Today's Chamber Schedule:")}
                       </span>
                       <span className="text-emerald-700 font-black bg-emerald-100 px-2 py-0.5 rounded text-[10px]">
-                        {doctor.available ? 'অপেক্ষার সময় ~২ মি.' : 'সিরিয়াল শুরু'}
+                        {doctor.available
+                          ? (lang === 'bn' ? 'অপেক্ষার সময় ~২ মি.' : 'Wait ~2 mins')
+                          : (lang === 'bn' ? 'সিরিয়াল শুরু' : 'Serial Ready')}
                       </span>
                     </div>
                     <div className="flex items-center gap-1.5 flex-wrap">
@@ -200,7 +206,9 @@ export default function DoctorsSection({ onDoctorSelect }) {
                         </span>
                       ))}
                       {doctor.slots.length > 3 && (
-                        <span className="text-[11px] text-slate-500 font-bold">+{doctor.slots.length - 3} আরও</span>
+                        <span className="text-[11px] text-slate-500 font-bold">
+                          +{doctor.slots.length - 3} {lang === 'bn' ? 'আরও' : 'more'}
+                        </span>
                       )}
                     </div>
                   </div>
