@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Phone, Radio, MapPin, CheckCircle2, Siren, ArrowRight, Navigation } from 'lucide-react';
+import { MapPin, CheckCircle2, Siren } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { ApiService } from '../services/api';
 
@@ -26,7 +26,7 @@ export default function EmergencySOSBanner({ onSOSClick, onOpenLiveTracker, onIn
       } finally {
         setLoading(false);
         setQuickSent(true);
-        setTimeout(() => setQuickSent(false), 8000);
+        setTimeout(() => setQuickSent(false), 12000);
 
         // Immediately launch live tracking radar!
         if (onInstantSOS) {
@@ -90,28 +90,28 @@ export default function EmergencySOSBanner({ onSOSClick, onOpenLiveTracker, onIn
               </div>
               <p className="text-xs sm:text-sm font-semibold text-slate-100 mt-1 leading-snug">
                 {lang === 'bn'
-                  ? 'যেকোনো চিকিৎসা সংকটে ১-ট্যাপে জিপিএস অ্যাম্বুলেন্স ডাকুন অথবা লাইভ ট্র্যাকার ব্যবহার করুন।'
-                  : 'Broadcast real-time GPS distress to nearby ambulance & ICU teams with instant tracking.'}
+                  ? 'যেকোনো চিকিৎসা সংকটে ১-ট্যাপে জিপিএস অ্যাম্বুলেন্স ডাকুন ও তাৎক্ষণিক ট্র্যাক করুন।'
+                  : 'Broadcast real-time GPS distress to nearby ambulance & ICU teams with instant live tracking.'}
               </p>
             </div>
           </div>
 
-          {/* Quick Actions */}
-          <div className="flex items-center gap-2.5 flex-wrap justify-center md:justify-end">
+          {/* Single High-Priority GPS SOS Action */}
+          <div className="flex items-center justify-center md:justify-end">
             {quickSent ? (
               <button
                 onClick={handleTrackerClick}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs shadow-lg animate-pulse transition-all cursor-pointer"
+                className="flex items-center gap-2 px-5 py-2.5 sm:py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs sm:text-sm shadow-xl shadow-emerald-600/40 border-2 border-white/40 animate-pulse transition-all cursor-pointer active:scale-95"
                 title={lang === 'bn' ? 'রেডার ট্র্যাকার দেখতে ক্লিক করুন' : 'Click to view radar tracker'}
               >
                 <CheckCircle2 className="h-4 w-4" />
-                <span>{lang === 'bn' ? '✓ জরুরি সিগন্যাল পাঠানো হয়েছে (ট্র্যাকার খুলুন)' : '✓ SOS Active (Open Radar)'}</span>
+                <span>{lang === 'bn' ? '✓ জরুরি সিগন্যাল সক্রিয় (লাইভ রেডার দেখুন)' : '✓ SOS Active (View Live Radar)'}</span>
               </button>
             ) : (
               <button
                 onClick={handleInstantGPSDispatch}
                 disabled={loading}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#ff1753] hover:bg-[#e11d48] text-white font-black text-xs sm:text-sm shadow-xl shadow-[#ff1753]/40 border-2 border-white/30 active:scale-95 transition-all animate-pulse disabled:opacity-75 cursor-pointer"
+                className="flex items-center gap-2.5 px-6 py-2.5 sm:py-3 rounded-2xl bg-[#ff1753] hover:bg-[#e11d48] text-white font-black text-xs sm:text-sm shadow-xl shadow-[#ff1753]/40 border-2 border-white/30 active:scale-95 transition-all animate-pulse disabled:opacity-75 cursor-pointer"
               >
                 <MapPin className="h-4 w-4 text-white" />
                 <span>
@@ -121,14 +121,6 @@ export default function EmergencySOSBanner({ onSOSClick, onOpenLiveTracker, onIn
                 </span>
               </button>
             )}
-
-            <button
-              onClick={handleTrackerClick}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl font-extrabold text-xs bg-[#7c3aed] hover:bg-[#6d28d9] text-white transition-all shadow-md shadow-[#7c3aed]/25 active:scale-95 cursor-pointer"
-            >
-              <Radio className="h-3.5 w-3.5 text-violet-200 animate-pulse" />
-              <span>{lang === 'bn' ? 'লাইভ ট্র্যাকার' : 'Live Tracker'}</span>
-            </button>
           </div>
         </div>
       </div>
